@@ -1,0 +1,14 @@
+{
+  "name": "vidjot",
+  "version": "1.0.0",
+  "description": "A node app to store ideas for future videos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kaushik",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
