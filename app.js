@@ -19,8 +19,12 @@ const connectDB = async () => {
     console.error(error.message);
   }
 };
-
 connectDB();
+
+//Load Idea Model
+require('./models/Idea');
+const Idea = mongoose.model('ideas');
+
 //Handlbars Middleware
 app.engine(
   'handlebars',
