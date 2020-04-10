@@ -1,7 +1,26 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
 const app = express(); //Initalise the app
 
+//Connect to mongoose
+const uri = process.env.ATLAS_URI;
+const connectDB = async () => {
+  try {
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      useUnifiedTopology: true,
+    });
+    console.log('connected to database');
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+connectDB();
 //Handlbars Middleware
 app.engine(
   'handlebars',
@@ -24,6 +43,11 @@ app.get('/about', (req, res) => {
 const port = 4000;
 
 app.listen(port, () => {
-  //Listen on port 5000
+  //Listen on port
   console.log(`Server running on port ${port}`);
 });
+
+// process.on('SIGINT', () => {
+//   console.log('Bye bye!');
+//   process.exit();
+// });
