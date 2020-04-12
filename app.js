@@ -47,7 +47,7 @@ app.set('view engine', 'handlebars');
 //Home Page Route
 app.get('/', (req, res) => {
   const title = 'Home';
-  res.render('index', {
+  res.render('home', {
     title: title,
   });
 });
