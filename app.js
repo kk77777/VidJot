@@ -5,6 +5,7 @@ const {
   allowInsecurePrototypeAccess,
 } = require('@handlebars/allow-prototype-access');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -43,6 +44,9 @@ app.engine(
   })
 );
 app.set('view engine', 'handlebars');
+
+//Method-Override Middlewear
+app.use(methodOverride('_method'));
 
 //Home Page Route
 app.get('/', (req, res) => {
@@ -110,6 +114,20 @@ app.post('/ideas', (req, res) => {
       res.redirect('/ideas');
     });
   }
+});
+
+//Edit Form Process
+app.put('/ideas/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id,
+  }).then((idea) => {
+    idea.title = req.body.title;
+    idea.details = req.body.details;
+
+    idea.save().then((idea) => {
+      res.redirect('/ideas');
+    });
+  });
 });
 
 const port = 4000;
