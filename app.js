@@ -163,6 +163,16 @@ app.delete('/ideas/:id', (req, res) => {
   });
 });
 
+//User Login Route
+app.get('/users/login', (req, res) => {
+  res.send('login');
+});
+
+//User Register Route
+app.get('/users/register', (req, res) => {
+  res.send('register');
+});
+
 const port = 4000;
 
 app.listen(port, () => {
