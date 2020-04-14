@@ -4,6 +4,8 @@ const Handlebars = require('handlebars');
 const {
   allowInsecurePrototypeAccess,
 } = require('@handlebars/allow-prototype-access');
+const flash = require('connect-flash');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
@@ -31,7 +33,7 @@ connectDB();
 require('./models/Idea');
 const Idea = mongoose.model('ideas');
 
-//Body-Parser Middlewear
+//Body-Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -45,8 +47,27 @@ app.engine(
 );
 app.set('view engine', 'handlebars');
 
-//Method-Override Middlewear
+//Method-Override Middleware
 app.use(methodOverride('_method'));
+
+//Express-Session Middleware
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.uses(flash());
+
+//Global Variables
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 //Home Page Route
 app.get('/', (req, res) => {
