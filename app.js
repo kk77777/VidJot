@@ -59,7 +59,7 @@ app.use(
   })
 );
 
-app.uses(flash());
+app.use(flash());
 
 //Global Variables
 app.use(function (req, res, next) {
